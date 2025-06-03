@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbg"
+    tools:context=".FormActivity">
+
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:autofillHints="email address"
+        android:background="@drawable/formbg"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="@string/nama"
+        android:inputType="textPersonName"
+        android:paddingLeft="30dp"
+        android:paddingTop="0dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:autofillHints="password"
+        android:background="@drawable/formbg"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="30dp"
+        android:paddingTop="0dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameField"
+        app:layout_constraintVertical_bias="0.062" />
+
+    <EditText
+        android:id="@+id/phoneField"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:autofillHints="password"
+        android:background="@drawable/formbg"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="@string/nomor_telepon"
+        android:inputType="phone"
+        android:paddingLeft="30dp"
+        android:paddingTop="0dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailField"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="140dp"
+        android:layout_height="52dp"
+        android:backgroundTint="@color/secolor"
+        android:text="@string/konfirmasi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneField"
+        app:layout_constraintVertical_bias="0.07"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/batalButton"
+        android:layout_width="140dp"
+        android:layout_height="52dp"
+        android:backgroundTint="#C3A292"
+        android:text="@string/batal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneField"
+        app:layout_constraintVertical_bias="0.071"
+        tools:ignore="TextContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
