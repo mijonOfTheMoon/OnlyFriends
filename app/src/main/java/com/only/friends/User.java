@@ -2,21 +2,21 @@ package com.only.friends;
 
 import com.google.firebase.database.Exclude;
 
-public class Contact {
+public class User {
 
     @Exclude
     private String id;
     private String name;
     private String email;
-    private String phone;
+    private String bio;
 
-    public Contact() {
+    public User() {
     }
 
-    public Contact(String name, String email, String phone) {
+    public User(String name, String email, String bio) {
         this.name = name;
-        this.phone = phone;
         this.email = email;
+        this.bio = bio;
     }
 
     public String getId() {
@@ -31,11 +31,23 @@ public class Contact {
         return name;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

@@ -1,7 +1,6 @@
-<resources>
-    <string name="app_name">Only Friends</string>
-    <string name="app_logo">Contact App</string>
-    <string name="tagline">Every connection, perfectly organized.\nYour contact, reimagined.</string>
+<resources>    <string name="app_name">OnlyFriends</string>
+    <string name="app_logo">OnlyFriends</string>
+    <string name="tagline">Connect with friends.\nShare your moments.</string>
     <string name="emailhint">Email Address</string>
     <string name="forgot">Forgot Password?</string>
     <string name="orlogin">or login with</string>
@@ -15,7 +14,7 @@
     <string name="twitter">twitter</string>
     <string name="gmail">gmail</string>
     <string name="facebook">facebook</string>
-    <string name="default_web_client_id">875694400202-t063jqb2hmd56gl74j2ti287gu9vkl00.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">844876719602-5mctqk5nji079rntcbq0rkpc1b1hmk31.apps.googleusercontent.com</string>
 
     <string name="dummy_name">Dummy Name</string>
     <string name="dummy_gmail_com">dummy@gmail.com</string>

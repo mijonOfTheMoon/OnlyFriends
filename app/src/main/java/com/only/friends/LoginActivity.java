@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Objects.requireNonNull(getSupportActionBar()).hide();
+
         email = findViewById(R.id.emailfield);
         password = findViewById(R.id.passwordfield);
         Button login = findViewById(R.id.loginbutton);
@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(final FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(LoginActivity.this, ContactActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
