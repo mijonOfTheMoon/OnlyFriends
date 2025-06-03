@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844876719602",
+    "project_id": "onlyfriends-1b1f9",
+    "storage_bucket": "onlyfriends-1b1f9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844876719602:android:2e189f484d5412bdeeb76b",
+        "android_client_info": {
+          "package_name": "com.only.friends"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU31Bde4_wBP8TetQgZjM7tI-waEX2M8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

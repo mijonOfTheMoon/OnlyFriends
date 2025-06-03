@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.firebasedemo"
+        applicationId = "com.only.friends"
         minSdk = 34
         targetSdk = 35
         versionCode = 1
