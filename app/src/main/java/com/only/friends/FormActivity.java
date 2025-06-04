@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FormActivity extends AppCompatActivity {
 
@@ -110,7 +111,7 @@ public class FormActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("posts");
-        databaseReference = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("posts");
+        databaseReference = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
     }
 
     private void setupClickListeners() {
@@ -195,8 +196,8 @@ public class FormActivity extends AppCompatActivity {
     }
     
     private void updatePostInDatabase(String fileName, String caption) {
-        databaseReference.child(editPostId).child("content").setValue(fileName);
-        databaseReference.child(editPostId).child("caption").setValue(caption)
+        databaseReference.child("posts").child(editPostId).child("content").setValue(fileName);
+        databaseReference.child("posts").child(editPostId).child("caption").setValue(caption)
                 .addOnSuccessListener(aVoid -> {
                     showLoading(false);
                     Toast.makeText(FormActivity.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
@@ -224,34 +225,43 @@ public class FormActivity extends AppCompatActivity {
     }
 
     private void createPostInDatabase(String fileName, String caption) {
-        String postId = databaseReference.push().getKey();
-        
+        String postId = databaseReference.child("posts").push().getKey();
+        AtomicReference<String> username = new AtomicReference<>();
+
         if (postId == null) {
             showLoading(false);
             Toast.makeText(this, "Failed to generate post ID", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Post post = new Post(
-                currentUser.getUid(),
-                currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Anonymous",
-                fileName,
-                caption,
-                System.currentTimeMillis()
-        );
-        post.setId(postId);
+        databaseReference.child("users").child(currentUser.getUid()).child("name").get().addOnSuccessListener(dataSnapshot -> {
+            username.set(dataSnapshot.getValue(String.class));
 
-        databaseReference.child(postId).setValue(post)
-                .addOnSuccessListener(aVoid -> {
-                    showLoading(false);
-                    Toast.makeText(FormActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish();
-                })
-                .addOnFailureListener(e -> {
-                    showLoading(false);
-                    Toast.makeText(FormActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+            if (username.get() == null || username.get().isBlank()) {
+                username.set(currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Anonymous");
+            }
+
+            Post post = new Post(
+                    currentUser.getUid(),
+                    username.get(),
+                    fileName,
+                    caption,
+                    System.currentTimeMillis()
+            );
+            post.setId(postId);
+
+            databaseReference.child("posts").child(postId).setValue(post)
+                    .addOnSuccessListener(aVoid -> {
+                        showLoading(false);
+                        Toast.makeText(FormActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        showLoading(false);
+                        Toast.makeText(FormActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        });
     }
 
     private void showLoading(boolean show) {

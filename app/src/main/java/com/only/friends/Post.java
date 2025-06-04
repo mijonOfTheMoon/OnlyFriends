@@ -23,10 +23,12 @@ public class Post {
         this.timestamp = timestamp;
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
 
+    @Exclude
     public void setId(String id) {
         this.id = id;
     }
