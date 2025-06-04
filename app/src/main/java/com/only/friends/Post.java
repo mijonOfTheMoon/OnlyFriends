@@ -11,6 +11,7 @@ public class Post {
     private String userEmail;
     private String content;
     private long timestamp;
+    private int likeCount;
 
     public Post() {
     }
@@ -21,6 +22,7 @@ public class Post {
         this.userEmail = userEmail;
         this.content = content;
         this.timestamp = timestamp;
+        this.likeCount = 0;
     }
 
     public String getId() {
@@ -69,5 +71,13 @@ public class Post {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 }

@@ -87,10 +87,20 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }    @Override
+    public void onDelete(Post post) {
+        databaseReference.child("posts").child(post.getId()).removeValue();
     }
 
     @Override
-    public void onDelete(Post post) {
-        databaseReference.child("posts").child(post.getId()).removeValue();
+    public void onLike(Post post) {
+        if (mAuth.getCurrentUser() != null) {
+            int newLikeCount = post.getLikeCount() + 1;
+            post.setLikeCount(newLikeCount);
+
+            databaseReference.child("posts").child(post.getId()).child("likeCount").setValue(newLikeCount);
+
+            adapter.notifyDataSetChanged();
+        }
     }
 }

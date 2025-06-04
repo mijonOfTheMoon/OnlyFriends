@@ -79,12 +79,25 @@ public class FeedFragment extends Fragment implements PostAdapter.OnPostActionLi
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    @Override
+    }    @Override
     public void onDelete(Post post) {
         if (mAuth.getCurrentUser() != null && post.getUserId().equals(mAuth.getCurrentUser().getUid())) {
             databaseReference.child("posts").child(post.getId()).removeValue();
+        }
+    }
+
+    @Override
+    public void onLike(Post post) {
+        if (mAuth.getCurrentUser() != null) {
+            // Increment like count
+            int newLikeCount = post.getLikeCount() + 1;
+            post.setLikeCount(newLikeCount);
+            
+            // Update in Firebase
+            databaseReference.child("posts").child(post.getId()).child("likeCount").setValue(newLikeCount);
+            
+            // Notify adapter to update the UI
+            adapter.notifyDataSetChanged();
         }
     }
 }
