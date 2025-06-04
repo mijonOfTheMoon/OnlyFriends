@@ -8,16 +8,16 @@ public class Post {
     private String id;    
     private String userId;
     private String userName;
-    private String userEmail;
     private String content;
     private String caption;
     private long timestamp;
 
     public Post() {
-    }    public Post(String userId, String userName, String userEmail, String content, String caption, long timestamp) {
+    }
+
+    public Post(String userId, String userName, String content, String caption, long timestamp) {
         this.userId = userId;
         this.userName = userName;
-        this.userEmail = userEmail;
         this.content = content;
         this.caption = caption;
         this.timestamp = timestamp;
@@ -35,45 +35,20 @@ public class Post {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public long getTimestamp() {
         return timestamp;
-    }    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getCaption() {
         return caption;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
 }

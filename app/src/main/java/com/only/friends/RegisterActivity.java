@@ -14,8 +14,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Objects;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

@@ -1,5 +1,7 @@
 package com.only.friends;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,14 +34,12 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
     private static final int CREATE_POST_REQUEST = 1;
     private static final int EDIT_POST_REQUEST = 2;
-    
-    private RecyclerView recyclerView;
+
     private PostAdapter adapter;
     private List<Post> posts;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton fabAddPost;
     private StorageReference storageReference;
 
     @Nullable
@@ -53,9 +52,9 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         storageReference = FirebaseStorage.getInstance().getReference("posts");
         databaseReference = firebaseDatabase.getReference();
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-        fabAddPost = view.findViewById(R.id.fabAddPost);
+        FloatingActionButton fabAddPost = view.findViewById(R.id.fabAddPost);
 
         posts = new ArrayList<>();
         adapter = new PostAdapter(posts, this, true);
@@ -84,6 +83,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         String currentUserId = mAuth.getCurrentUser().getUid();
         
         databaseReference.child("posts").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 posts.clear();
@@ -109,9 +109,11 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == CREATE_POST_REQUEST || requestCode == EDIT_POST_REQUEST) 
-            && resultCode == getActivity().RESULT_OK) {
-            loadMyPosts();
+        if ((requestCode == CREATE_POST_REQUEST || requestCode == EDIT_POST_REQUEST)) {
+            getActivity();
+            if (resultCode == Activity.RESULT_OK) {
+                loadMyPosts();
+            }
         }
     }
 

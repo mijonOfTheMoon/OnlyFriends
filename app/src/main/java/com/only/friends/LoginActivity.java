@@ -43,7 +43,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {

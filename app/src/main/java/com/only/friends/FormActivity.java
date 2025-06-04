@@ -1,5 +1,6 @@
 package com.only.friends;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -22,15 +22,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
@@ -39,23 +36,20 @@ public class FormActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView imagePreview;
-    private TextView selectImageText;
-    private TextView titleText;
+    private TextView selectImageText, titleText;
     private EditText captionField;
-    private Button selectImageButton;
-    private Button createPostButton;
-    private Button cancelButton;
+    private Button selectImageButton, createPostButton, cancelButton;
     private ProgressBar progressBar;
 
     private Uri selectedImageUri;
-    private FirebaseAuth auth;
     private FirebaseUser currentUser;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private boolean isEditMode = false;
-    private String editPostId;
-    private String existingImageFileName;
-    private boolean imageChanged = false;    @Override
+    private String editPostId, existingImageFileName;
+    private boolean imageChanged = false;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -83,6 +77,7 @@ public class FormActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
     }
     
+    @SuppressLint("SetTextI18n")
     private void checkEditMode() {
         Intent intent = getIntent();
         isEditMode = intent.getBooleanExtra("is_editing", false);
@@ -106,19 +101,17 @@ public class FormActivity extends AppCompatActivity {
     }
     
     private void loadExistingImage(String fileName) {
-        storageReference.child(fileName).getDownloadUrl().addOnSuccessListener( uri -> {
-            Glide.with(this)
-                    .load(uri)
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_gallery)
-                    .into(imagePreview);
-        });
+        storageReference.child(fileName).getDownloadUrl().addOnSuccessListener( uri -> Glide.with(this)
+                .load(uri)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_gallery)
+                .into(imagePreview));
                 
         selectImageText.setVisibility(View.GONE);
     }
 
     private void initializeFirebase() {
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("posts");
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
@@ -136,11 +129,14 @@ public class FormActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("IntentReset")
     private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        @SuppressLint("IntentReset") Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }    @Override
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -189,6 +185,7 @@ public class FormActivity extends AppCompatActivity {
         String fileName = "post_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + ".jpg";
         StorageReference imageRef = storageReference.child(fileName);
 
+        storageReference.child(existingImageFileName).delete();
         imageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
@@ -224,18 +221,10 @@ public class FormActivity extends AppCompatActivity {
         StorageReference imageRef = storageReference.child(fileName);
 
         imageRef.putFile(selectedImageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        createPostInDatabase(fileName, caption);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showLoading(false);
-                        Toast.makeText(FormActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnSuccessListener(taskSnapshot -> createPostInDatabase(fileName, caption))
+                .addOnFailureListener(e -> {
+                    showLoading(false);
+                    Toast.makeText(FormActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -251,7 +240,6 @@ public class FormActivity extends AppCompatActivity {
         Post post = new Post(
                 currentUser.getUid(),
                 currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Anonymous",
-                currentUser.getEmail(),
                 fileName,
                 caption,
                 System.currentTimeMillis()
@@ -259,21 +247,15 @@ public class FormActivity extends AppCompatActivity {
         post.setId(postId);
 
         databaseReference.child(postId).setValue(post)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        showLoading(false);
-                        Toast.makeText(FormActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        finish();
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    showLoading(false);
+                    Toast.makeText(FormActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showLoading(false);
-                        Toast.makeText(FormActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    showLoading(false);
+                    Toast.makeText(FormActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
