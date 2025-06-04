@@ -15,16 +15,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/userNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#333"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Image container with rounded corners -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,21 +25,31 @@
             <ImageView
                 android:id="@+id/postImageView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="320dp"
                 android:scaleType="centerCrop"
                 android:background="#f0f0f0"
                 android:contentDescription="Post image" />
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Caption text -->
+        <TextView
+            android:id="@+id/userNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/primary_variant"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/captionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#333"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/primary_variant"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,13 +60,14 @@
 
             <TextView
                 android:id="@+id/timestampText"
+                android:layout_gravity="bottom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="12sp"
-                android:textColor="#999" />
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/primary_variant"
+                android:textSize="12sp" />
 
-            <!-- Edit/Delete section (for own posts only) -->
             <LinearLayout
                 android:id="@+id/editDeleteSection"
                 android:layout_width="wrap_content"
@@ -77,22 +78,23 @@
 
                 <ImageButton
                     android:id="@+id/editButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_menu_edit"
+                    android:src="@drawable/edit"
                     android:contentDescription="Edit"
                     android:scaleType="centerInside"
                     android:layout_marginEnd="8dp" />
 
                 <ImageButton
                     android:id="@+id/deleteButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_menu_delete"
+                    android:src="@drawable/trash"
                     android:contentDescription="Delete"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    app:tint="@color/red" />
 
             </LinearLayout>
 
