@@ -44,7 +44,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://fir-demo-3ba13-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference = firebaseDatabase.getReference();        recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         fabAddPost = view.findViewById(R.id.fabAddPost);

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FeedFragment extends Fragment implements PostAdapter.OnPostActionListener {
+public class HomeFragment extends Fragment implements PostAdapter.OnPostActionListener {
 
     private RecyclerView recyclerView;
     private PostAdapter adapter;
@@ -35,10 +35,10 @@ public class FeedFragment extends Fragment implements PostAdapter.OnPostActionLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://fir-demo-3ba13-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference = firebaseDatabase.getReference();
 
         recyclerView = view.findViewById(R.id.recyclerView);

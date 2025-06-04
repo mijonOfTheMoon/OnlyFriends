@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             
             if (itemId == R.id.nav_feed) {
-                selectedFragment = new FeedFragment();
+                selectedFragment = new HomeFragment();
             } else if (itemId == R.id.nav_my_posts) {
                 selectedFragment = new MyPostsFragment();
             } else if (itemId == R.id.nav_profile) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new FeedFragment())
+                    .replace(R.id.fragment_container, new HomeFragment())
                     .commit();
             bottomNav.setSelectedItemId(R.id.nav_feed);
         }
