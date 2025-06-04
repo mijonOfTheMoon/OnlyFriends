@@ -1,4 +1,5 @@
-<resources>    <string name="app_name">OnlyFriends</string>
+<resources>
+    <string name="app_name">OnlyFriends</string>
     <string name="app_logo">OnlyFriends</string>
     <string name="tagline">Connect with friends.\nShare your moments.</string>
     <string name="emailhint">Email Address</string>
@@ -6,6 +7,7 @@
     <string name="orlogin">or login with</string>
     <string name="donthaveacc">Don’t have an account?</string>
     <string name="regist"><u>Register now</u></string>
+    <string name="logon"><u>Login</u></string>
     <string name="tnc">By signing up, you are agree with our</string>
     <string name="tnclink"><u>Terms &amp; Conditions</u></string>
     <string name="logo">Logo</string>

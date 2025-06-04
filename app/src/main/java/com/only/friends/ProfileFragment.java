@@ -21,16 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 public class ProfileFragment extends Fragment {
 
     private TextView emailText;
     private EditText nameField;
-    private EditText bioField;
-    private EditText postContentField;
     private Button updateProfileButton;
-    private Button createPostButton;
     private Button logoutButton;
     
     private DatabaseReference databaseReference;
@@ -45,12 +40,9 @@ public class ProfileFragment extends Fragment {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://fir-demo-3ba13-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference = firebaseDatabase.getReference();
 
-        emailText = view.findViewById(R.id.emailText);
+        emailText = view.findViewById(R.id.emailField);
         nameField = view.findViewById(R.id.nameField);
-        bioField = view.findViewById(R.id.bioField);
-        postContentField = view.findViewById(R.id.postContentField);
         updateProfileButton = view.findViewById(R.id.updateProfileButton);
-        createPostButton = view.findViewById(R.id.createPostButton);
         logoutButton = view.findViewById(R.id.logoutButton);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -60,7 +52,7 @@ public class ProfileFragment extends Fragment {
         }
 
         updateProfileButton.setOnClickListener(v -> updateProfile());
-        createPostButton.setOnClickListener(v -> createPost());
+//        createPostButton.setOnClickListener(v -> createPost());
         logoutButton.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).signOut();
@@ -80,7 +72,6 @@ public class ProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
                     nameField.setText(user.getName());
-                    bioField.setText(user.getBio());
                 }
             }
 
@@ -95,14 +86,13 @@ public class ProfileFragment extends Fragment {
         if (currentUser == null) return;
 
         String name = nameField.getText().toString().trim();
-        String bio = bioField.getText().toString().trim();
 
         if (name.isEmpty()) {
             Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        User user = new User(name, currentUser.getEmail(), bio);
+        User user = new User(name, currentUser.getEmail());
         databaseReference.child("users").child(currentUser.getUid()).setValue(user)
                 .addOnSuccessListener(unused -> 
                     Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show())
@@ -110,35 +100,35 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(), "Failed to update profile", Toast.LENGTH_SHORT).show());
     }
 
-    private void createPost() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) return;
-
-        String content = postContentField.getText().toString().trim();
-        if (content.isEmpty()) {
-            Toast.makeText(getContext(), "Post content cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String name = nameField.getText().toString().trim();
-        if (name.isEmpty()) {
-            name = "Anonymous";
-        }
-
-        Post post = new Post(
-            currentUser.getUid(),
-            name,
-            currentUser.getEmail(),
-            content,
-            System.currentTimeMillis()
-        );
-
-        databaseReference.child("posts").push().setValue(post)
-                .addOnSuccessListener(unused -> {
-                    postContentField.setText("");
-                    Toast.makeText(getContext(), "Post created successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> 
-                    Toast.makeText(getContext(), "Failed to create post", Toast.LENGTH_SHORT).show());
-    }
+//    private void createPost() {
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser == null) return;
+//
+//        String content = postContentField.getText().toString().trim();
+//        if (content.isEmpty()) {
+//            Toast.makeText(getContext(), "Post content cannot be empty", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        String name = nameField.getText().toString().trim();
+//        if (name.isEmpty()) {
+//            name = "Anonymous";
+//        }
+//
+//        Post post = new Post(
+//            currentUser.getUid(),
+//            name,
+//            currentUser.getEmail(),
+//            content,
+//            System.currentTimeMillis()
+//        );
+//
+//        databaseReference.child("posts").push().setValue(post)
+//                .addOnSuccessListener(unused -> {
+//                    postContentField.setText("");
+//                    Toast.makeText(getContext(), "Post created successfully", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(e ->
+//                    Toast.makeText(getContext(), "Failed to create post", Toast.LENGTH_SHORT).show());
+//    }
 }

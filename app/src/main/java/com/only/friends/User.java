@@ -8,15 +8,13 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private String bio;
 
     public User() {
     }
 
-    public User(String name, String email, String bio) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
-        this.bio = bio;
     }
 
     public String getId() {
@@ -43,11 +41,4 @@ public class User {
         this.email = email;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 }
