@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileFragment extends Fragment {
 
     private EditText nameField;
-
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
