@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             emailText.setText(currentUser.getEmail());
+            nameField.setText(currentUser.getDisplayName());
             loadUserProfile();
         }
 

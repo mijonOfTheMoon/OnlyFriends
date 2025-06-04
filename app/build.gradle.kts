@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.swiperefreshlayout)
     implementation(libs.cardview)
     implementation(libs.material.v1110)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
