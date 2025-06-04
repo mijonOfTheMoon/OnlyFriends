@@ -87,17 +87,8 @@ public class HomeFragment extends Fragment implements PostAdapter.OnPostActionLi
     }
 
     @Override
-    public void onLike(Post post) {
-        if (mAuth.getCurrentUser() != null) {
-            // Increment like count
-            int newLikeCount = post.getLikeCount() + 1;
-            post.setLikeCount(newLikeCount);
-            
-            // Update in Firebase
-            databaseReference.child("posts").child(post.getId()).child("likeCount").setValue(newLikeCount);
-            
-            // Notify adapter to update the UI
-            adapter.notifyDataSetChanged();
-        }
+    public void onEdit(Post post) {
+        // This method won't be called for HomeFragment since we don't show edit buttons
+        // But we need to implement it due to the interface
     }
 }

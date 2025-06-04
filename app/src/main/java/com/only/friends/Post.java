@@ -11,7 +11,6 @@ public class Post {
     private String content; // filename of uploaded image in Firebase Storage
     private String caption; // user's caption/description for the post
     private long timestamp;
-    private int likeCount;
 
     public Post() {
     }    public Post(String userId, String userName, String userEmail, String content, String caption, long timestamp) {
@@ -21,7 +20,6 @@ public class Post {
         this.content = content;
         this.caption = caption;
         this.timestamp = timestamp;
-        this.likeCount = 0;
     }
 
     public String getId() {
@@ -66,16 +64,8 @@ public class Post {
 
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
+    }    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public int getLikeCount() {
-        return likeCount;
-    }    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
     }
 
     public String getCaption() {

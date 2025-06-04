@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActionListener {
 
     private static final int CREATE_POST_REQUEST = 1;
+    private static final int EDIT_POST_REQUEST = 2;
     
     private RecyclerView recyclerView;
     private PostAdapter adapter;
@@ -45,12 +47,15 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        databaseReference = firebaseDatabase.getReference();        recyclerView = view.findViewById(R.id.recyclerView);
+        databaseReference = firebaseDatabase.getReference();
+
+        recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         fabAddPost = view.findViewById(R.id.fabAddPost);
 
         posts = new ArrayList<>();
-        adapter = new PostAdapter(posts, this);
+        // Pass true to indicate this is for user's own posts
+        adapter = new PostAdapter(posts, this, true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -94,30 +99,34 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 swipeRefreshLayout.setRefreshing(false);
-            }        });
+            }
+        });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CREATE_POST_REQUEST && resultCode == getActivity().RESULT_OK) {
-            // Refresh the posts when a new post is created
+        if ((requestCode == CREATE_POST_REQUEST || requestCode == EDIT_POST_REQUEST) 
+            && resultCode == getActivity().RESULT_OK) {
+            // Refresh the posts when a post is created or edited
             loadMyPosts();
         }
     }    @Override
     public void onDelete(Post post) {
-        databaseReference.child("posts").child(post.getId()).removeValue();
+        databaseReference.child("posts").child(post.getId()).removeValue()
+                .addOnSuccessListener(aVoid -> 
+                    Toast.makeText(getContext(), "Post deleted successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> 
+                    Toast.makeText(getContext(), "Failed to delete post", Toast.LENGTH_SHORT).show());
     }
 
     @Override
-    public void onLike(Post post) {
-        if (mAuth.getCurrentUser() != null) {
-            int newLikeCount = post.getLikeCount() + 1;
-            post.setLikeCount(newLikeCount);
-
-            databaseReference.child("posts").child(post.getId()).child("likeCount").setValue(newLikeCount);
-
-            adapter.notifyDataSetChanged();
-        }
+    public void onEdit(Post post) {
+        Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+        intent.putExtra("post_id", post.getId());
+        intent.putExtra("post_caption", post.getCaption());
+        intent.putExtra("post_content", post.getContent());
+        intent.putExtra("is_editing", true);
+        startActivityForResult(intent, EDIT_POST_REQUEST);
     }
 }
