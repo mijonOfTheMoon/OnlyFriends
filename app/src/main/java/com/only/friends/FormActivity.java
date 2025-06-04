@@ -110,7 +110,7 @@ public class FormActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("posts");
-        databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+        databaseReference = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("posts");
     }
 
     private void setupClickListeners() {
