@@ -1,21 +1,43 @@
 <resources>
     <string name="app_name">OnlyFriends</string>
-    <string name="app_logo">OnlyFriends</string>
     <string name="tagline">Connect with friends.\nShare your moments.</string>
     <string name="emailhint">Email Address</string>
+    <string name="password">Password</string>
+    <string name="logon"><u>Login</u></string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="forgot">Forgot Password?</string>
     <string name="orlogin">or login with</string>
     <string name="donthaveacc">Don’t have an account?</string>
     <string name="regist"><u>Register now</u></string>
-    <string name="logon"><u>Login</u></string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
     <string name="twitter">twitter</string>
     <string name="gmail">gmail</string>
     <string name="facebook">facebook</string>
+
     <string name="default_web_client_id">844876719602-5mctqk5nji079rntcbq0rkpc1b1hmk31.apps.googleusercontent.com</string>
     <string name="facebook_app_id">1698519134103251</string>
     <string name="fb_login_protocol_scheme">fb1698519134103251</string>
     <string name="facebook_client_token">62eaac4f6191f3d400dcbf4ef2f178c1</string>
-    <string name="register">Register</string>
+    <string name="batal">Batal</string>
+    <string name="tulis_caption_untuk_postingan_anda">Tulis caption untuk postingan anda</string>
+    <string name="caption">Caption:</string>
+    <string name="simpan">Simpan</string>
+    <string name="create_post">Create Post</string>
+    <string name="selected_image_preview">Selected image preview</string>
+    <string name="select_image">Select Image</string>
+    <string name="sudah_punya_akun">Sudah punya akun?</string>
+    <string name="home">Home</string>
+    <string name="add_new_post">Add new post</string>
+    <string name="my_posts">My Posts</string>
+    <string name="email">Email:</string>
+    <string name="logout">Logout</string>
+    <string name="masukkan_nama_anda">Masukkan nama anda</string>
+    <string name="name">Name:</string>
+    <string name="profile">Profile</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="post_image">Post image</string>
+
+
 </resources>

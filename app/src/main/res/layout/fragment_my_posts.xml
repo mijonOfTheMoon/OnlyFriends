@@ -2,9 +2,11 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +21,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="16dp"
-            android:text="My Posts"
+            android:text="@string/my_posts"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -31,7 +33,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +45,11 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:contentDescription="Add new post"
+            android:contentDescription="@string/add_new_post"
             android:src="@android:drawable/ic_input_add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ImageContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

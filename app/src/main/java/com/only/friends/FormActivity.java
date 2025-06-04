@@ -36,11 +36,10 @@ public class FormActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView imagePreview;
-    private TextView selectImageText, titleText;
+    private TextView titleText;
     private EditText captionField;
     private Button selectImageButton, createPostButton, cancelButton;
     private ProgressBar progressBar;
-
     private Uri selectedImageUri;
     private FirebaseUser currentUser;
     private StorageReference storageReference;
@@ -68,7 +67,6 @@ public class FormActivity extends AppCompatActivity {
 
     private void initializeViews() {
         imagePreview = findViewById(R.id.imagePreview);
-        selectImageText = findViewById(R.id.selectImageText);
         titleText = findViewById(R.id.createPostTitle);
         captionField = findViewById(R.id.captionField);
         selectImageButton = findViewById(R.id.selectImageButton);
@@ -106,8 +104,6 @@ public class FormActivity extends AppCompatActivity {
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_gallery)
                 .into(imagePreview));
-                
-        selectImageText.setVisibility(View.GONE);
     }
 
     private void initializeFirebase() {
@@ -143,7 +139,6 @@ public class FormActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             imagePreview.setImageURI(selectedImageUri);
-            selectImageText.setVisibility(View.GONE);
             imageChanged = true;
         }
     }

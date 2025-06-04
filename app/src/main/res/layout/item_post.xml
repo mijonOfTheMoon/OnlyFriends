@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
@@ -26,9 +27,10 @@
                 android:id="@+id/postImageView"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
-                android:scaleType="centerCrop"
                 android:background="#f0f0f0"
-                android:contentDescription="Post image" />
+                android:contentDescription="@string/post_image"
+                android:scaleType="centerCrop"
+                tools:ignore="ImageContrastCheck" />
 
         </androidx.cardview.widget.CardView>
 
@@ -82,7 +84,7 @@
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/edit"
-                    android:contentDescription="Edit"
+                    android:contentDescription="@string/edit"
                     android:scaleType="centerInside"
                     android:layout_marginEnd="8dp" />
 
@@ -92,7 +94,7 @@
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/trash"
-                    android:contentDescription="Delete"
+                    android:contentDescription="@string/delete"
                     android:scaleType="centerInside"
                     app:tint="@color/red" />
 

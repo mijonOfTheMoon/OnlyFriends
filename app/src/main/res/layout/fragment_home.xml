@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:backgroundTint="@color/primary"
-        android:background="#f5f5f5">
+        android:background="@color/primary">
 
         <TextView
             android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Home"
+            android:text="@string/home"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -27,8 +26,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
