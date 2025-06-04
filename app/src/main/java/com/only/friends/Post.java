@@ -5,11 +5,12 @@ import com.google.firebase.database.Exclude;
 public class Post {
 
     @Exclude
-    private String id;    private String userId;
+    private String id;    
+    private String userId;
     private String userName;
     private String userEmail;
-    private String content; // filename of uploaded image in Firebase Storage
-    private String caption; // user's caption/description for the post
+    private String content;
+    private String caption;
     private long timestamp;
 
     public Post() {
