@@ -8,34 +8,12 @@
     <string name="donthaveacc">Don’t have an account?</string>
     <string name="regist"><u>Register now</u></string>
     <string name="logon"><u>Login</u></string>
-    <string name="tnc">By signing up, you are agree with our</string>
-    <string name="tnclink"><u>Terms &amp; Conditions</u></string>
-    <string name="logo">Logo</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="twitter">twitter</string>
     <string name="gmail">gmail</string>
     <string name="facebook">facebook</string>
     <string name="default_web_client_id">844876719602-5mctqk5nji079rntcbq0rkpc1b1hmk31.apps.googleusercontent.com</string>
-
-    <string name="dummy_name">Dummy Name</string>
-    <string name="dummy_gmail_com">dummy@gmail.com</string>
-    <string name="dummy_phone">123456</string>
-    <string name="profile_picture">Profile Picture</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="add_new_contact">Add New Contact</string>
-    <string name="welcome_user">Welcome, User</string>
-    <string name="who_you_gonna_call_today">Who you gonna call today?</string>
-    <string name="contact_list">Contact List</string>
-
-    <string name="konfirmasi">Konfirmasi</string>
-    <string name="batal">Batal</string>
-    <string name="email">Email</string>
-    <string name="nomor_telepon">Nomor Telepon</string>
-    <string name="nama">Nama</string>
-    <string name="log_out">Log out</string>
-
     <string name="facebook_app_id">1698519134103251</string>
     <string name="fb_login_protocol_scheme">fb1698519134103251</string>
     <string name="facebook_client_token">62eaac4f6191f3d400dcbf4ef2f178c1</string>

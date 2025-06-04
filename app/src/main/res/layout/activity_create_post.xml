@@ -42,10 +42,9 @@
             android:id="@+id/imagePreview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F5F5F5"
+            android:background="@color/secondary_variant"
             android:contentDescription="Selected image preview"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_camera" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/selectImageText"
@@ -53,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/poppins"
-            android:text="Tap to select image"
-            android:textColor="@android:color/darker_gray"
+            android:text="Tekan di sini untuk memilih gambar"
+            android:textColor="@color/primary_variant"
             android:textSize="16sp" />
 
     </androidx.cardview.widget.CardView>
@@ -101,7 +100,7 @@
         android:background="@drawable/formbg"
         android:fontFamily="@font/poppins"
         android:gravity="top|start"
-        android:hint="Write a caption for your post..."
+        android:hint="Tulis caption untuk postingan anda"
         android:inputType="textMultiLine"
         android:maxLines="5"
         android:paddingStart="16dp"
@@ -122,13 +121,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/formbg"
         android:fontFamily="@font/poppins_medium"
         android:letterSpacing="0"
-        android:text="Create Post"
+        android:text="Simpan"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:backgroundTint="@color/secondary"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/captionField" />
@@ -143,17 +142,15 @@
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_medium"
         android:letterSpacing="0"
-        android:text="Cancel"
+        android:text="Batal"
         android:textAllCaps="false"
-        android:textColor="@color/red"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/red"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/createPostButton"
         app:layout_constraintVertical_bias="0.0"
-        app:strokeColor="@color/red"
         app:strokeWidth="2dp" />
 
     <ProgressBar
