@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "844876719602",
+    "firebase_url": "https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "onlyfriends-1b1f9",
     "storage_bucket": "onlyfriends-1b1f9.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.only.friends"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "844876719602-vi65o8hdqdd2hkf388l9h6jbes1f1gcl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.only.friends",
+            "certificate_hash": "3eb64d85d5cafa71e1b2dd20182db5f239954584"
+          }
+        },
+        {
+          "client_id": "844876719602-5mctqk5nji079rntcbq0rkpc1b1hmk31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCU31Bde4_wBP8TetQgZjM7tI-waEX2M8c"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "844876719602-5mctqk5nji079rntcbq0rkpc1b1hmk31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
