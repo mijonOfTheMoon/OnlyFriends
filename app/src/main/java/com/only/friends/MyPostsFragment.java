@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -119,12 +121,21 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
     @Override
     public void onDelete(Post post) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Hapus Post")
+                .setMessage("Apakah Anda yakin ingin menghapus post ini?")
+                .setPositiveButton("Hapus", (dialog, which) -> deletePost(post))
+                .setNegativeButton("Batal", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+    
+    private void deletePost(Post post) {
         storageReference.child(post.getContent()).delete();
         databaseReference.child("posts").child(post.getId()).removeValue()
                 .addOnSuccessListener(aVoid ->
-                    Toast.makeText(getContext(), "Post deleted successfully", Toast.LENGTH_SHORT).show())
+                    Toast.makeText(getContext(), "Post berhasil dihapus", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                    Toast.makeText(getContext(), "Failed to delete post", Toast.LENGTH_SHORT).show());
+                    Toast.makeText(getContext(), "Gagal menghapus Post", Toast.LENGTH_SHORT).show());
     }
 
     @Override
