@@ -21,6 +21,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,8 +52,6 @@ public class FormActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    
-    // Edit mode variables
     private boolean isEditMode = false;
     private String editPostId;
     private String existingImageFileName;
@@ -92,17 +91,14 @@ public class FormActivity extends AppCompatActivity {
             editPostId = intent.getStringExtra("post_id");
             String caption = intent.getStringExtra("post_caption");
             existingImageFileName = intent.getStringExtra("post_content");
-            
-            // Update UI for edit mode
+
             titleText.setText("Edit Post");
             createPostButton.setText("Update Post");
-            
-            // Pre-populate caption
+
             if (caption != null) {
                 captionField.setText(caption);
             }
-            
-            // Load existing image
+
             if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
                 loadExistingImage(existingImageFileName);
             }
@@ -110,14 +106,13 @@ public class FormActivity extends AppCompatActivity {
     }
     
     private void loadExistingImage(String fileName) {
-        StorageReference imageRef = storageReference.child(fileName);
-        
-        // Use Glide to load the image from Firebase Storage
-        com.bumptech.glide.Glide.with(this)
-                .load(imageRef)
-                .placeholder(android.R.drawable.ic_menu_gallery)
-                .error(android.R.drawable.ic_menu_gallery)
-                .into(imagePreview);
+        storageReference.child(fileName).getDownloadUrl().addOnSuccessListener( uri -> {
+            Glide.with(this)
+                    .load(uri)
+                    .placeholder(android.R.drawable.ic_menu_gallery)
+                    .error(android.R.drawable.ic_menu_gallery)
+                    .into(imagePreview);
+        });
                 
         selectImageText.setVisibility(View.GONE);
     }
@@ -125,7 +120,7 @@ public class FormActivity extends AppCompatActivity {
     private void initializeFirebase() {
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
-        storageReference = FirebaseStorage.getInstance().getReference("post_images");
+        storageReference = FirebaseStorage.getInstance().getReference("posts");
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
     }
 
@@ -153,7 +148,7 @@ public class FormActivity extends AppCompatActivity {
             selectedImageUri = data.getData();
             imagePreview.setImageURI(selectedImageUri);
             selectImageText.setVisibility(View.GONE);
-            imageChanged = true; // Mark that image has been changed
+            imageChanged = true;
         }
     }
 
@@ -172,7 +167,6 @@ public class FormActivity extends AppCompatActivity {
         if (isEditMode) {
             updatePost(caption);
         } else {
-            // For new posts, image is required
             if (selectedImageUri == null) {
                 Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
@@ -185,26 +179,21 @@ public class FormActivity extends AppCompatActivity {
         showLoading(true);
         
         if (imageChanged && selectedImageUri != null) {
-            // Upload new image and then update post
             uploadImageAndUpdatePost(caption);
         } else {
-            // Just update the caption
             updatePostInDatabase(existingImageFileName, caption);
         }
     }
     
     private void uploadImageAndUpdatePost(String caption) {
-        // Generate unique filename
         String fileName = "post_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + ".jpg";
         StorageReference imageRef = storageReference.child(fileName);
 
         imageRef.putFile(selectedImageUri)
                 .addOnSuccessListener(taskSnapshot -> {
-                    // Delete old image if it exists
                     if (existingImageFileName != null && !existingImageFileName.isEmpty()) {
                         storageReference.child(existingImageFileName).delete();
                     }
-                    // Update post with new image
                     updatePostInDatabase(fileName, caption);
                 })
                 .addOnFailureListener(e -> {
@@ -231,7 +220,6 @@ public class FormActivity extends AppCompatActivity {
     private void uploadImageAndCreatePost(String caption) {
         showLoading(true);
 
-        // Generate unique filename
         String fileName = "post_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + ".jpg";
         StorageReference imageRef = storageReference.child(fileName);
 
@@ -239,7 +227,6 @@ public class FormActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Image uploaded successfully, now create post
                         createPostInDatabase(fileName, caption);
                     }
                 })
@@ -261,12 +248,11 @@ public class FormActivity extends AppCompatActivity {
             return;
         }
 
-        // Create Post object with filename as content
         Post post = new Post(
                 currentUser.getUid(),
                 currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Anonymous",
                 currentUser.getEmail(),
-                fileName, // This is the filename in Firebase Storage
+                fileName,
                 caption,
                 System.currentTimeMillis()
         );

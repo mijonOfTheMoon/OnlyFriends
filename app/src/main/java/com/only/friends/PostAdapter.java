@@ -82,7 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             userNameText.setText(post.getUserName());
             captionText.setText(post.getCaption() != null ? post.getCaption() : "");
 
-            FirebaseStorage.getInstance().getReference("post_images/" + post.getContent()).getDownloadUrl().addOnSuccessListener(
+            FirebaseStorage.getInstance().getReference("posts/" + post.getContent()).getDownloadUrl().addOnSuccessListener(
                     uri -> Glide.with(itemView.getContext())
                             .load(uri)
                             .error(android.R.drawable.ic_menu_gallery)

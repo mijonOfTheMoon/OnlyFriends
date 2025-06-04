@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +41,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
     private FirebaseAuth mAuth;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fabAddPost;
+    private StorageReference storageReference;
 
     @Nullable
     @Override
@@ -47,6 +50,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        storageReference = FirebaseStorage.getInstance().getReference("posts");
         databaseReference = firebaseDatabase.getReference();
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -54,7 +58,6 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         fabAddPost = view.findViewById(R.id.fabAddPost);
 
         posts = new ArrayList<>();
-        // Pass true to indicate this is for user's own posts
         adapter = new PostAdapter(posts, this, true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,7 +94,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
                         posts.add(post);
                     }
                 }
-                Collections.sort(posts, (p1, p2) -> Long.compare(p2.getTimestamp(), p1.getTimestamp()));
+                posts.sort((p1, p2) -> Long.compare(p2.getTimestamp(), p1.getTimestamp()));
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -108,15 +111,17 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == CREATE_POST_REQUEST || requestCode == EDIT_POST_REQUEST) 
             && resultCode == getActivity().RESULT_OK) {
-            // Refresh the posts when a post is created or edited
             loadMyPosts();
         }
-    }    @Override
+    }
+
+    @Override
     public void onDelete(Post post) {
+        storageReference.child(post.getContent()).delete();
         databaseReference.child("posts").child(post.getId()).removeValue()
-                .addOnSuccessListener(aVoid -> 
+                .addOnSuccessListener(aVoid ->
                     Toast.makeText(getContext(), "Post deleted successfully", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> 
+                .addOnFailureListener(e ->
                     Toast.makeText(getContext(), "Failed to delete post", Toast.LENGTH_SHORT).show());
     }
 

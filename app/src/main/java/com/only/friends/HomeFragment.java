@@ -25,11 +25,9 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements PostAdapter.OnPostActionListener {
 
-    private RecyclerView recyclerView;
     private PostAdapter adapter;
     private List<Post> posts;
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
@@ -37,11 +35,10 @@ public class HomeFragment extends Fragment implements PostAdapter.OnPostActionLi
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://onlyfriends-1b1f9-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference = firebaseDatabase.getReference();
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         posts = new ArrayList<>();
@@ -69,7 +66,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnPostActionLi
                         posts.add(post);
                     }
                 }
-                Collections.sort(posts, (p1, p2) -> Long.compare(p2.getTimestamp(), p1.getTimestamp()));
+                posts.sort((p1, p2) -> Long.compare(p2.getTimestamp(), p1.getTimestamp()));
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -79,16 +76,13 @@ public class HomeFragment extends Fragment implements PostAdapter.OnPostActionLi
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }    @Override
+    }
+
+    @Override
     public void onDelete(Post post) {
-        if (mAuth.getCurrentUser() != null && post.getUserId().equals(mAuth.getCurrentUser().getUid())) {
-            databaseReference.child("posts").child(post.getId()).removeValue();
-        }
     }
 
     @Override
     public void onEdit(Post post) {
-        // This method won't be called for HomeFragment since we don't show edit buttons
-        // But we need to implement it due to the interface
     }
 }
