@@ -16,7 +16,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatePostActivity"
+            android:name=".FormActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

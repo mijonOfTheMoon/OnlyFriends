@@ -63,7 +63,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         swipeRefreshLayout.setOnRefreshListener(this::loadMyPosts);
         
         fabAddPost.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+            Intent intent = new Intent(getActivity(), FormActivity.class);
             startActivityForResult(intent, CREATE_POST_REQUEST);
         });
 
@@ -122,7 +122,7 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
     @Override
     public void onEdit(Post post) {
-        Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+        Intent intent = new Intent(getActivity(), FormActivity.class);
         intent.putExtra("post_id", post.getId());
         intent.putExtra("post_caption", post.getCaption());
         intent.putExtra("post_content", post.getContent());

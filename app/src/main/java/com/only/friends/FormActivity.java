@@ -33,7 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
-public class CreatePostActivity extends AppCompatActivity {
+public class FormActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -60,7 +60,7 @@ public class CreatePostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_create_post);
+        setContentView(R.layout.activity_form);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -209,7 +209,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     showLoading(false);
-                    Toast.makeText(CreatePostActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FormActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
     
@@ -218,13 +218,13 @@ public class CreatePostActivity extends AppCompatActivity {
         databaseReference.child(editPostId).child("caption").setValue(caption)
                 .addOnSuccessListener(aVoid -> {
                     showLoading(false);
-                    Toast.makeText(CreatePostActivity.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FormActivity.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 })
                 .addOnFailureListener(e -> {
                     showLoading(false);
-                    Toast.makeText(CreatePostActivity.this, "Failed to update post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FormActivity.this, "Failed to update post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -247,7 +247,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showLoading(false);
-                        Toast.makeText(CreatePostActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -277,7 +277,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         showLoading(false);
-                        Toast.makeText(CreatePostActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
                         finish();
                     }
@@ -286,7 +286,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showLoading(false);
-                        Toast.makeText(CreatePostActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FormActivity.this, "Failed to create post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
