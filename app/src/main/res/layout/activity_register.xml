@@ -120,7 +120,7 @@
             tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
         <TextView
-            android:id="@+id/tnc"
+            android:id="@+id/sudah_punya_akun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
@@ -135,19 +135,20 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tnclink"
+            android:id="@+id/login_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="48dp"
             android:fontFamily="@font/poppins"
             android:text="@string/logon"
+            android:clickable="true"
             android:textColor="@color/secondary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toEndOf="@+id/tnc"
+            app:layout_constraintStart_toEndOf="@+id/sudah_punya_akun"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

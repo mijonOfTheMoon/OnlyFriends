@@ -3,6 +3,7 @@ package com.only.friends;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.emailfield);
         EditText password = findViewById(R.id.passwordfield);
         Button register = findViewById(R.id.registerbutton);
+        TextView login = findViewById(R.id.login_link);
 
         register.setOnClickListener(v -> {
             String emailText = email.getText().toString();
@@ -44,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
                 createAccount(emailText, passwordText);
             }
         });
+
+        login.setOnClickListener(v -> finish());
     }
 
     private void createAccount(String email, String password) {
