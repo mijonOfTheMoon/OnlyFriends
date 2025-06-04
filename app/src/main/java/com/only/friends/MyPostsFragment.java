@@ -1,5 +1,6 @@
 package com.only.friends;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,12 +28,15 @@ import java.util.Objects;
 
 public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActionListener {
 
+    private static final int CREATE_POST_REQUEST = 1;
+    
     private RecyclerView recyclerView;
     private PostAdapter adapter;
     private List<Post> posts;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fabAddPost;
 
     @Nullable
     @Override
@@ -40,10 +45,9 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://fir-demo-3ba13-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        databaseReference = firebaseDatabase.getReference();
-
-        recyclerView = view.findViewById(R.id.recyclerView);
+        databaseReference = firebaseDatabase.getReference();        recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        fabAddPost = view.findViewById(R.id.fabAddPost);
 
         posts = new ArrayList<>();
         adapter = new PostAdapter(posts, this);
@@ -52,6 +56,11 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this::loadMyPosts);
+        
+        fabAddPost.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+            startActivityForResult(intent, CREATE_POST_REQUEST);
+        });
 
         loadMyPosts();
 
@@ -85,8 +94,16 @@ public class MyPostsFragment extends Fragment implements PostAdapter.OnPostActio
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+            }        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREATE_POST_REQUEST && resultCode == getActivity().RESULT_OK) {
+            // Refresh the posts when a new post is created
+            loadMyPosts();
+        }
     }    @Override
     public void onDelete(Post post) {
         databaseReference.child("posts").child(post.getId()).removeValue();
